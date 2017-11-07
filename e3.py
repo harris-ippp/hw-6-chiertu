@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import shutil
 shutil.copy2('president_general_2016.csv', '2016.csv')
+
+# extract vote counts data for all counties from 1924 to 2016
 years = [str(each)+".csv" for each in list(range(1924,2017,4))]
 dflist = []
 for each in years:
@@ -19,6 +21,8 @@ df = pd.concat(dflist)
 df.index = [item.partition('(')[0] for item in list(df.index)]
 df = df.reset_index().groupby(['index','Year']).sum().reset_index()
 df['Republican Share'] = df['Republican']/df['Total Votes Cast']
+
+# plot Republican Vote Share for the listed counties
 counties = ['Accomack County', 'Albemarle County', 'Alexandria City', 'Alleghany County']
 for county in counties:
     name = county.lower().replace(" ", "_")
